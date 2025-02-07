@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVSchoolMemes - Vintage Edition</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
         @keyframes filmGrain {
             0%, 100% { background-position: 0 0; }
             20% { background-position: 20% 20%; }
@@ -13,9 +15,18 @@
             80% { background-position: -20% 20%; }
         }
 
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; visibility: hidden; }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes typewriter {
@@ -23,35 +34,29 @@
             to { width: 100%; }
         }
 
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
         :root {
             --vintage-black: #0a0a0a;
             --vintage-white: #f5f5f5;
-            --vintage-gray: #808080;
+            --vintage-sepia: #704214;
+            --vintage-gold: #bf9b30;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Courier New", monospace;
         }
 
         body {
             background: var(--vintage-black);
             color: var(--vintage-white);
-            position: relative;
+            font-family: 'Special Elite', cursive;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        body::after {
+        /* Film grain effect */
+        body::before {
             content: "";
             position: fixed;
             top: 0;
@@ -64,159 +69,166 @@
             z-index: 1000;
         }
 
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--vintage-black);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            animation: fadeOut 0.5s ease-in-out 3s forwards;
-        }
-
-        .loader::after {
-            content: 'Loading...';
-            font-size: 2rem;
-            color: var(--vintage-white);
-            border-right: 2px solid var(--vintage-white);
-            animation: blink 0.8s infinite;
-        }
-
         .header {
-            background: var(--vintage-black);
-            padding: 3rem 1rem;
+            background: linear-gradient(to bottom, var(--vintage-black), rgba(10, 10, 10, 0.9));
+            padding: 4rem 1rem;
             text-align: center;
-            border-bottom: 2px solid var(--vintage-white);
             position: relative;
+            border-bottom: 3px double var(--vintage-gold);
         }
 
         .header h1 {
-            font-size: 3.5rem;
-            letter-spacing: 0.5rem;
+            font-size: 4rem;
+            letter-spacing: 0.8rem;
             text-transform: uppercase;
             margin-bottom: 1rem;
             position: relative;
+            color: var(--vintage-gold);
+            text-shadow: 3px 3px 0 var(--vintage-sepia);
+            animation: glitch 5s infinite;
         }
 
-        .header::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--vintage-white), transparent);
+        .header p {
+            font-size: 1.5rem;
+            color: var(--vintage-white);
+            opacity: 0.8;
         }
 
         .flash-news {
-            background: var(--vintage-white);
-            color: var(--vintage-black);
-            padding: 0.8rem;
+            background: var(--vintage-sepia);
+            color: var(--vintage-white);
+            padding: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--vintage-gold);
+            position: relative;
             overflow: hidden;
-            white-space: nowrap;
-            border-bottom: 1px solid var(--vintage-gray);
         }
 
         .flash-news p {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
-            font-weight: bold;
+            animation: typewriter 15s steps(60) infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid var(--vintage-gold);
+            margin: 0 auto;
+            max-width: fit-content;
         }
 
         .content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            animation: fadeIn 1s ease-out;
         }
 
         .rules {
-            background: rgba(245, 245, 245, 0.05);
-            border: 1px solid var(--vintage-white);
-            padding: 2rem;
+            background: rgba(112, 66, 20, 0.1);
+            border: 2px solid var(--vintage-gold);
+            padding: 3rem;
             margin: 2rem 0;
             position: relative;
+            backdrop-filter: blur(5px);
         }
 
         .rules h2 {
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-            letter-spacing: 0.2rem;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--vintage-gold);
             text-transform: uppercase;
+            letter-spacing: 0.3rem;
         }
 
         .rules-list {
             list-style: none;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .rules-list li {
             padding: 1.5rem;
-            background: rgba(245, 245, 245, 0.03);
-            border: 1px solid rgba(245, 245, 245, 0.2);
+            background: rgba(191, 155, 48, 0.05);
+            border: 1px solid var(--vintage-gold);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .rules-list li:hover {
+            transform: translateY(-5px) rotate(1deg);
+            background: rgba(191, 155, 48, 0.1);
+            box-shadow: 0 5px 15px rgba(191, 155, 48, 0.2);
+        }
+
+        .rules-list li::before {
+            content: "✦";
+            color: var(--vintage-gold);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .social {
+            text-align: center;
+            padding: 4rem;
+            margin-top: 3rem;
+            border-top: 2px double var(--vintage-gold);
+        }
+
+        .social a {
+            color: var(--vintage-gold);
+            text-decoration: none;
+            font-size: 1.4rem;
+            letter-spacing: 0.3rem;
+            padding: 1rem 2rem;
+            border: 2px solid var(--vintage-gold);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .rules-list li:hover {
-            transform: translateY(-5px);
-            background: rgba(245, 245, 245, 0.07);
-            border-color: var(--vintage-white);
-        }
-
-        .rules-list li::before {
-            content: "●";
-            margin-right: 10px;
-            color: var(--vintage-white);
-        }
-
-        .social {
-            text-align: center;
-            padding: 3rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(245, 245, 245, 0.2);
-        }
-
-        .social a {
-            color: var(--vintage-white);
-            text-decoration: none;
-            font-size: 1.2rem;
-            letter-spacing: 0.2rem;
-            position: relative;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--vintage-white);
+        .social a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--vintage-gold);
             transition: all 0.3s ease;
+            z-index: -1;
         }
 
         .social a:hover {
-            background: var(--vintage-white);
             color: var(--vintage-black);
+        }
+
+        .social a:hover::before {
+            left: 0;
         }
 
         footer {
             background: var(--vintage-black);
             text-align: center;
             padding: 2rem;
-            border-top: 1px solid var(--vintage-white);
-            margin-top: 2rem;
+            border-top: 3px double var(--vintage-gold);
+            color: var(--vintage-gold);
+            font-size: 1.1rem;
         }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 2rem; }
+            .header h1 { 
+                font-size: 2.5rem;
+                letter-spacing: 0.5rem;
+            }
+            .rules { padding: 2rem 1rem; }
             .rules-list { grid-template-columns: 1fr; }
+            .social a { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="loader"></div>
-
     <header class="header">
         <h1>SVSchoolMemes</h1>
         <p>Vintage Edition</p>
@@ -228,7 +240,7 @@
 
     <main class="content">
         <section class="rules">
-            <h2>Rules and Protocols We Will Follow to Keep the Community and Resources Safe</h2>
+            <h2>Rules and Protocols</h2>
             <ul class="rules-list">
                 <li>Respectful Content Only - Maintain dignity and respect in all posts</li>
                 <li>No Personal Attacks - Zero tolerance for targeting individuals</li>
